@@ -16,3 +16,8 @@
 //= require turbolinks
 //= require semantic-ui
 //= require_tree .
+
+// when turbolinks load then use javascript code for navbar dropdown
+$(document).on('turbolinks:load', function() {
+    $('.ui.dropdown').dropdown();
+})
