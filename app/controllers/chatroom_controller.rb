@@ -2,5 +2,9 @@
 
 # Root controller
 class ChatroomController < ApplicationController
-  def index; end
+
+  def index
+    @messages = Message.all
+  end
+
 end
