@@ -10,13 +10,18 @@ class MessagesController < ApplicationController
     return unless message.save
 
     ActionCable.server.broadcast 'chatroom_channel',
-                                 foo: message.body
+                                 mod_message: message_render(message)
   end
 
   private
 
   def message_params
     params.require(:message).permit(:body)
+  end
+
+  # Rendering the message partial
+  def message_render(message)
+    render(partial: 'message', locals: { message: message })
   end
 
 end
