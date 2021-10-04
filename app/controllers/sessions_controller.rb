@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    if user_authenticate
+    user = find_user
+    if user_authenticate(user)
       # Authenticate once in next line and remain sign in for future requests
       session[:user_id] = user.id
       flash[:success] = 'You have successfully logged in'
@@ -37,9 +38,12 @@ class SessionsController < ApplicationController
     return unless logged_in?
   end
 
-  def user_authenticate
-    user = User.find_by(username: params[:session][:username])
+  def user_authenticate(user)
     user&.authenticate(params[:session][:password])
+  end
+
+  def find_user
+    User.find_by(username: params[:session][:username])
   end
 
 end
